@@ -1,34 +1,58 @@
 import {
   View,
   Text,
-  Pressable,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
+  Alert,
+  TextInput,
 } from 'react-native';
-import homeImg from '../../../assets/images/HomeImg.png';
 import { Feather } from '@expo/vector-icons';
 import COLORS from '../../../constans/colors';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import { useRouter } from 'expo-router';
-import Field from '../../components/Field';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 import Background from '../../components/Background';
+import { registerUser } from '../../server/auth/authUser';
 
 const Register = () => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userData, setUserData] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const initialState = () => {
+    setConfirmPassword('');
+  };
 
   router = useRouter();
 
-  const handleLogin = () => {};
+  const register = () => {
+    const { name, lastName, email, password } = userData;
+    if (!name || !lastName || !email || !password || !confirmPassword) {
+      return Alert.alert('Please fill all required');
+    }
+    if (confirmPassword !== password) {
+      return Alert.alert('Password not match');
+    }
+    setIsLoading(true);
+    try {
+      registerUser(userData);
+    } catch (e) {
+      return Alert.alert({ error: e });
+    }
+    Alert.alert('Register successfully');
+    setIsLoading(false);
+  };
 
   return (
     <Background>
@@ -53,6 +77,7 @@ const Register = () => {
         >
           Create a new account
         </Text>
+        <Spinner visible={isLoading} />
         <View
           style={{
             backgroundColor: 'white',
@@ -63,64 +88,60 @@ const Register = () => {
             alignItems: 'center',
           }}
         >
-          <Field placeholder="First Name" />
-          <Field placeholder="Last Name" />
-          <Field placeholder="Email " keyboardType={'email-address'} />
+          {/* <Spinner visible={isLoading} /> */}
+          {/* FIRST NAME Input */}
+          <TextInput
+            style={styles.textInput}
+            value={userData.name}
+            placeholder="First Name"
+            placeholderTextColor={COLORS.darkBlue}
+            onChangeText={(text) => setUserData({ ...userData, name: text })}
+          />
+          {/* LAST NAME Input */}
+          <TextInput
+            style={styles.textInput}
+            value={userData.lastName}
+            placeholder="Last Name"
+            placeholderTextColor={COLORS.darkBlue}
+            onChangeText={(text) =>
+              setUserData({ ...userData, lastName: text })
+            }
+          />
+          {/* EMAIL  Input */}
+          <TextInput
+            style={styles.textInput}
+            value={userData.email}
+            placeholder="Email"
+            placeholderTextColor={COLORS.darkBlue}
+            keyboardType={'email-address'}
+            onChangeText={(text) => setUserData({ ...userData, email: text })}
+          />
+          {/* PASSWORD Input */}
+          <TextInput
+            style={styles.textInput}
+            value={userData.password}
+            placeholder="Password"
+            placeholderTextColor={COLORS.darkBlue}
+            secureTextEntry={true}
+            onChangeText={(text) =>
+              setUserData({ ...userData, password: text })
+            }
+          />
+          {/* CONFIRM PASSWORD Input */}
+          <TextInput
+            style={styles.textInput}
+            value={confirmPassword}
+            placeholder="Confirm Password"
+            placeholderTextColor={COLORS.darkBlue}
+            secureTextEntry={true}
+            onChangeText={(text) => setConfirmPassword(text)}
+          />
 
-          <Field placeholder="Password" secureTextEntry={true} />
-
-          <Field placeholder="Confirm Password" secureTextEntry={true} />
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '78%',
-              paddingRight: 16,
-            }}
-          >
-            <Text style={{ color: 'grey', fontSize: 16 }}>
-              By signing in, you agree to our{' '}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.darkBlue,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}
-            >
-              Terms & Conditions
-            </Text>
-          </View>
-
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              width: '78%',
-              paddingRight: 16,
-              marginBottom: 10,
-            }}
-          >
-            <Text style={{ color: 'grey', fontSize: 16 }}>and </Text>
-            <Text
-              style={{
-                color: COLORS.darkBlue,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}
-            >
-              Privacy Policy
-            </Text>
-          </View>
           <Button
             textColor="white"
             bgColor={COLORS.darkBlue}
             btnLabel="Sign Up"
-            Press={() => {
-              alert('Account created');
-              props.navigation.navigate('Login');
-            }}
+            Press={register}
           />
           <View
             style={{
@@ -132,9 +153,7 @@ const Register = () => {
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
               Already have an account ?
             </Text>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('Login')}
-            >
+            <TouchableOpacity onPress={() => router.push('/(auth)/Login')}>
               <Text
                 style={{
                   color: COLORS.darkBlue,
@@ -154,7 +173,19 @@ const Register = () => {
 
 export default Register;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textInput: {
+    alignContent: 'flex-start',
+    borderRadius: 100,
+    color: COLORS.darkBlue,
+    paddingHorizontal: 30,
+    width: '80%',
+    backgroundColor: 'rgb(220,220, 220)',
+    marginVertical: 10,
+    fontSize: 18,
+    padding: 15,
+  },
+});
 // {isPasswordShown == true ? (
 //   //             <Feather name="eye-off" size={24} color="black" />
 //   //           ) : (

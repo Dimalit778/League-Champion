@@ -1,5 +1,6 @@
 import { Redirect } from 'expo-router';
-import { Text, View, SafeAreaView } from 'react-native';
+
+import { AuthProvider } from '../context/AuthContext';
 
 export default function App() {
   return <Redirect href="/(auth)" />;

@@ -43,10 +43,12 @@ const login = asyncHandler(async (req, res) => {
 //@ --->   < REGISTER > a new user
 // route   POST /api/users/register
 const register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, lastName, email, password } = req.body;
 
   // Check all fields are valid
   if (!name) return res.status(400).send({ message: 'Enter Your Name' });
+  if (!lastName)
+    return res.status(400).send({ message: 'Enter Your lastName' });
   if (!email) return res.status(400).send({ message: 'Enter Your Email' });
   if (!password) return res.status(400).send({ message: 'Enter Password' });
 
@@ -60,16 +62,19 @@ const register = asyncHandler(async (req, res) => {
   // create and store a new user
   const user = await User.create({
     name,
+    lastName,
     email: LowerCaseEmail,
     password,
   });
 
   if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    });
+    // res.status(201).json({
+    //   _id: user._id,
+    //   name: user.name,
+    //   lastName: user.lastName,
+    //   email: user.email,
+    // });
+    return res.status(200).send(JSON.stringify(user));
   } else {
     return res.status(400).send({ message: 'Failed Send You Email' });
   }

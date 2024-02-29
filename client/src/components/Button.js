@@ -9,7 +9,7 @@ const Button = ({ bgColor, btnLabel, textColor, Press }) => {
         backgroundColor: bgColor,
         borderRadius: 100,
         alignItems: 'center',
-        paddingVertical: 5,
+        padding: 10,
         marginVertical: 10,
       }}
     >

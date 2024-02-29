@@ -1,20 +1,18 @@
 import {
   View,
   Text,
-  Pressable,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
+  TextInput,
+  Alert,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import COLORS from '../../../constans/colors';
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
+
 import Background from '../../components/Background';
 import Field from '../../components/Field';
 
@@ -25,7 +23,9 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  router = useRouter();
+  const router = useRouter();
+  const login = () => {};
+
   return (
     <Background>
       <View style={{ alignItems: 'center', width: 460 }}>
@@ -64,37 +64,38 @@ const Login = (props) => {
           >
             Login to your account
           </Text>
-          <Field placeholder="Email" keyboardType={'email-address'} />
-          <Field placeholder="Password" secureTextEntry={true} />
-          <View
-            style={{
-              alignItems: 'flex-end',
-              width: '78%',
-              paddingRight: 16,
-              marginBottom: 200,
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.darkBlue,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}
-            >
-              Forgot Password ?
-            </Text>
-          </View>
-          <Button
-            textColor="white"
-            backgroundColor={COLORS.darkBlue}
-            title="Login"
-            Press={() => alert('Logged In')}
+          {/* EMAIL  Input */}
+          <TextInput
+            style={styles.textInput}
+            value={email}
+            placeholder="Email"
+            placeholderTextColor={COLORS.darkBlue}
+            keyboardType={'email-address'}
+            onChangeText={(text) => setEmail(text)}
           />
+          {/* PASSWORD Input */}
+          <TextInput
+            style={styles.textInput}
+            value={password}
+            placeholder="Password"
+            placeholderTextColor={COLORS.darkBlue}
+            secureTextEntry={true}
+            onChangeText={(text) => setPassword(text)}
+          />
+
+          <Button
+            btnLabel="Login"
+            textColor="white"
+            bgColor={COLORS.darkBlue}
+            Press={login}
+          />
+
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
+              paddingTop: 10,
             }}
           >
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
@@ -120,4 +121,16 @@ const Login = (props) => {
 
 export default Login;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textInput: {
+    alignContent: 'flex-start',
+    borderRadius: 100,
+    color: COLORS.darkBlue,
+    paddingHorizontal: 30,
+    width: '80%',
+    backgroundColor: 'rgb(220,220, 220)',
+    marginVertical: 10,
+    fontSize: 18,
+    padding: 15,
+  },
+});
