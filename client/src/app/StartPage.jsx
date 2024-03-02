@@ -1,14 +1,15 @@
+import { useRouter } from 'expo-router';
+
+import Button from '../components/Button';
+import COLORS from '../../constans/colors';
+import homeImg from '../../assets/images/HomeImg.png';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import homeImg from '../../../assets/images/HomeImg.png';
+import { useAuth } from 'context/authContext';
 
-import { Link, useRouter } from 'expo-router';
-import { AntDesign } from '@expo/vector-icons';
-import Button from '../../components/Button';
-import COLORS from '../../../constans/colors';
+const StartPage = () => {
+  const { user, logout } = useAuth();
 
-const index = () => {
-  const router = useRouter();
+  router = useRouter();
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground source={homeImg} style={styles.image}>
@@ -16,6 +17,7 @@ const index = () => {
         <View style={styles.boxHeader}>
           <Text style={styles.textHeader}>League Champion</Text>
         </View>
+
         {/* BOX Section */}
         <View style={styles.boxSection}>
           <Text style={styles.textHeader}>SECTION</Text>
@@ -26,22 +28,20 @@ const index = () => {
             btnLabel="Login"
             bgColor={COLORS.darkBlue}
             textColor={COLORS.white}
-            Press={() => router.push('/(auth)/Login')}
+            Press={() => router.push('Login')}
           />
           <Button
             btnLabel="Sign Up"
             bgColor={COLORS.darkBlue}
             textColor={COLORS.white}
-            Press={() => router.push('/(auth)/Register')}
+            Press={() => router.push('Register')}
           />
         </View>
       </ImageBackground>
     </View>
   );
 };
-
-export default index;
-
+export default StartPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

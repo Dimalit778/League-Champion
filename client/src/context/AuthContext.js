@@ -1,81 +1,86 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+BASE_ANDROID_URL = 'http://10.0.2.2:3000';
+BASE_ISO_URL = 'http://localhost:3000';
+
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const val = 'dima';
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
+
+  const register = async (userData) => {
+    const { name, lastName, email, password } = userData;
+    axios
+      .post(`${BASE_ANDROID_URL}/auth/register`, {
+        name,
+        lastName,
+        email,
+        password,
+      })
+      .then((response) => {
+        let userInfo = response.data;
+        setUser(userInfo);
+        setIsAuth(true);
+        AsyncStorage.setItem('user', JSON.stringify(userInfo));
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
+  //   //@   LOGIN
+  const login = async (email, password) => {
+    axios
+      .post(`${BASE_ANDROID_URL}/auth/login`, {
+        email,
+        password,
+      })
+      .then((response) => {
+        let userInfo = response.data;
+        setUser(userInfo);
+        setIsAuth(true);
+        AsyncStorage.setItem('user', JSON.stringify(userInfo));
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    return error.response.data;
+  };
+
+  const logout = async () => {
+    setUser(null);
+    setIsAuth(false);
+    AsyncStorage.removeItem('user');
+  };
+
+  const isLoggedIn = async () => {
+    try {
+      let userInfo = await AsyncStorage.getItem('user');
+      userInfo = JSON.parse(userInfo);
+      if (userInfo) {
+        setUser(userInfo);
+        setIsAuth(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ val }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, isAuth, register, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
-
-// const [isLoading, setItLoading] = useState(false);
-//   const [user, setUser] = useState(null);
-//   //@   LOGIN
-//   const login = (email, password) => {
-//     axios
-//       .post('http://localhost:3000/auth/login', {
-//         email,
-//         password,
-//       })
-//       .then((res) => {
-//         let user = res.data;
-//         console.log(user);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//     setItLoading(true);
-//     setUser(JSON.stringify(user));
-//     AsyncStorage.setItem('user', user);
-//     setItLoading(false);
-//   };
-//   //@   REGISTER
-//   const register = (name, lastName, email, password, confirmPassword) => {
-//     if (!confirmPassword === password) {
-//       return Alert.alert('Password not match');
-//     }
-//     setItLoading(true);
-//     axios
-//       .post('http://localhost:3000/auth/register', {
-//         name,
-//         lastName,
-//         email,
-//         password,
-//       })
-//       .then((res) => {
-//         let userInfo = res.data;
-//         setUser(userInfo);
-//         AsyncStorage.setItem('user', JSON.stringify(user));
-//         setItLoading(false);
-//         initialState();
-//       })
-//       .catch((err) => {
-//         Alert.alert('Registration failed');
-//         console.log(err);
-//         setItLoading(false);
-//       });
-//   };
-
-//   const logout = () => {
-//     setItLoading(true);
-//     setUser(null);
-//     AsyncStorage.removeItem('user');
-//     setItLoading(false);
-//   };
-
-//   const isLoggedIn = async () => {
-//     try {
-//       setItLoading(true);
-//       let user = await AsyncStorage.getItem('user');
-//       setUser(user);
-//       setItLoading(false);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-//   useEffect(() => {
-//     isLoggedIn();
-//   }, []);
+export const useAuth = () => {
+  const value = useContext(AuthContext);
+  if (!value) {
+    throw new Error('useAuth must be wrapped inside AuthContextProvider');
+  }
+  return value;
+};

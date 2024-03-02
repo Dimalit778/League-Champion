@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoute from './routes/authRoute.js';
+import { errorHandler } from './utilits/errorMiddleware.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +31,7 @@ mongoose
     console.log(err);
     console.log(process.env.DB);
   });
-
+app.use(errorHandler);
 app.listen(port, () => {
   console.log('server listening on port 3000');
 });
