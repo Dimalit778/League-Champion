@@ -24,7 +24,7 @@ const login = asyncHandler(async (req, res) => {
     const sendUser = {
       id: user._id,
       name: user.name,
-      lastName: user.lastName,
+
       email: user.email,
     };
     res.json(sendUser);
@@ -37,7 +37,7 @@ const login = asyncHandler(async (req, res) => {
 ///@ --->   < REGISTER > a new user
 // route   POST /api/users/register
 const register = asyncHandler(async (req, res) => {
-  const { name, lastName, email, password } = req.body;
+  const { name, email, password } = req.body;
 
   // check if user is already registered
   const userExists = await User.findOne({ email });
@@ -49,7 +49,6 @@ const register = asyncHandler(async (req, res) => {
   // create and store a new user
   const user = await User.create({
     name,
-    lastName,
     email: LowerCaseEmail,
     password,
   });
@@ -58,12 +57,15 @@ const register = asyncHandler(async (req, res) => {
     res.status(201).json({
       id: user._id,
       name: user.name,
-      lastName: user.lastName,
       email: user.email,
     });
   } else {
     return res.status(400).send({ message: 'Failed Send You Email' });
   }
 });
+const getAll = asyncHandler(async (req, res) => {
+  const allUsers = await User.find();
 
-export { login, register };
+  return res.status(200).send(allUsers);
+});
+export { login, register, getAll };

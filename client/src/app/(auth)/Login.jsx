@@ -4,60 +4,44 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Alert,
 } from 'react-native';
+import React, { useState } from 'react';
+// ICONS
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+// TOAST ALERT
+import Toast from 'react-native-toast-message';
+// CUSTOM COMPONENTS
+import Background from '../../../assets/images/HomeImg.png';
+import CustomKeyboardView from '../../components/CustomKeyboardView';
+import COLORS from '../../../constans/colors';
+import Button from '../../components/Button';
 
-import COLORS from '../../constans/colors';
-import React, { useState } from 'react';
-import Button from '../components/Button';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
 
-import Background from '../components/Background';
-import CustomKeyboardView from 'components/CustomKeyboardView';
-import { useAuth } from 'context/authContext';
-import Toast from 'react-native-toast-message';
-
 const Login = () => {
-  // const [isPasswordShown, setIsPasswordShown] = useState(false);
-  // const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useAuth();
   const router = useRouter();
 
   // -->  LOGIN  Function
   const handleLogin = async () => {
-    if (!email || !password) {
-      Toast.show({
-        type: 'error',
-        text1: 'Missing Fields',
-        visibilityTime: 3000,
+    const user = {
+      email: email,
+      password: password,
+    };
+    axios
+      .post('http://http://10.0.2.2:3000/auth/login', user)
+      .then((response) => {
+        console.log(response);
+        setEmail('');
+        setPassword('');
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      return;
-    }
-    setIsLoading(true);
-    let res = await login(email, password);
-
-    if (res) {
-      Toast.show({
-        type: 'success',
-        text1: 'Logged in  Successfully',
-        visibilityTime: 3000,
-      });
-      router.replace('/home');
-      setIsLoading(false);
-    }
-    console.log('res' + res);
-    Toast.show({
-      type: 'error',
-      text: 'Wrong email or password',
-      visibilityTime: 3000,
-    });
   };
 
   return (
@@ -132,7 +116,7 @@ const Login = () => {
               btnLabel="Login"
               textColor="white"
               bgColor={COLORS.darkBlue}
-              Press={handleLogin}
+              // Press={handleLogin}
             />
 
             <View

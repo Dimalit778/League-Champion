@@ -7,47 +7,38 @@ import {
   TextInput,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import COLORS from '../../constans/colors';
+
 import React, { useState } from 'react';
-import Button from '../components/Button';
+
 import { useRouter } from 'expo-router';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-import Background from '../components/Background';
+import Background from '../../../assets/images/HomeImg.png';
+import CustomKeyboardView from '../../components/CustomKeyboardView';
+import COLORS from '../../../constans/colors';
+import Button from '../../components/Button';
 
-import CustomKeyboardView from 'components/CustomKeyboardView';
-import { useAuth } from 'context/authContext';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
 
 const Register = () => {
-  // const [isPasswordShown, setIsPasswordShown] = useState(false);
-  // const [isChecked, setIsChecked] = useState(false);
-  const { register } = useAuth();
   router = useRouter();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState();
 
-  const [userData, setUserData] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
-
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState();
 
   // -->  REGISTER Function
   const handleRegister = async () => {
-    const { name, lastName, email, password } = userData;
-    if (!name || !lastName || !email || !password || !confirmPassword) {
-      Toast.show({
-        type: 'error',
-        text1: 'Missing Fields',
-        visibilityTime: 3000,
-      });
-      return;
-    }
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    };
+
     if (confirmPassword !== password) {
       Toast.show({
         type: 'error',
@@ -56,25 +47,17 @@ const Register = () => {
       });
       return;
     }
-    setIsLoading(true);
 
-    let res = await register(userData);
-    if (res) {
-      Toast.show({
-        type: 'success',
-        text1: 'Logged in  Successfully',
-        visibilityTime: 3000,
+    axios
+      .post('http://http://10.0.2.2:3000/auth/register', user)
+      .then((response) => {
+        console.log(response);
+        setEmail('');
+        setPassword('');
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      router.replace('/home');
-      setIsLoading(false);
-    } else {
-      Toast.show({
-        type: 'error',
-        text2: 'Registration Failed',
-        visibilityTime: 3000,
-      });
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -113,63 +96,43 @@ const Register = () => {
             >
               Create a new account
             </Text>
-            <Spinner visible={isLoading} />
-            {/* FIRST NAME Input */}
-            <View style={styles.inputBox}>
+            FIRST NAME Input
+            {/* <View style={styles.inputBox}>
               <AntDesign name="user" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
-                value={userData.name}
+                value={name}
                 placeholder="First Name"
                 placeholderTextColor={COLORS.darkBlue}
-                onChangeText={(text) =>
-                  setUserData({ ...userData, name: text })
-                }
+                onChangeText={(text) => setName(text)}
               />
-            </View>
-            {/* LAST NAME Input */}
-            <View style={styles.inputBox}>
-              <AntDesign name="user" size={28} color="black" />
-              <TextInput
-                style={styles.textInput}
-                value={userData.lastName}
-                placeholder="Last Name"
-                placeholderTextColor={COLORS.darkBlue}
-                onChangeText={(text) =>
-                  setUserData({ ...userData, lastName: text })
-                }
-              />
-            </View>
+            </View> */}
             {/* EMAIL  Input */}
-            <View style={styles.inputBox}>
+            {/* <View style={styles.inputBox}>
               <Fontisto name="email" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
-                value={userData.email}
+                value={email}
                 placeholder="Email"
                 placeholderTextColor={COLORS.darkBlue}
                 keyboardType={'email-address'}
-                onChangeText={(text) =>
-                  setUserData({ ...userData, email: text })
-                }
+                onChangeText={(text) => setEmail(text)}
               />
-            </View>
+            </View> */}
             {/* PASSWORD Input */}
-            <View style={styles.inputBox}>
+            {/* <View style={styles.inputBox}>
               <Feather name="lock" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
-                value={userData.password}
+                value={password}
                 placeholder="Password"
                 placeholderTextColor={COLORS.darkBlue}
                 secureTextEntry={true}
-                onChangeText={(text) =>
-                  setUserData({ ...userData, password: text })
-                }
+                onChangeText={(text) => setPassword(text)}
               />
-            </View>
+            </View> */}
             {/* CONFIRM PASSWORD Input */}
-            <View style={styles.inputBox}>
+            {/* <View style={styles.inputBox}>
               <Feather name="lock" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
@@ -185,8 +148,8 @@ const Register = () => {
               bgColor={COLORS.darkBlue}
               btnLabel="Sign Up"
               Press={handleRegister}
-            />
-            <View
+            /> */}
+            {/* <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -196,7 +159,7 @@ const Register = () => {
               <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
                 Already have an account ?
               </Text>
-              <TouchableOpacity onPress={() => router.push('Login')}>
+              <TouchableOpacity onPress={() => router.push('/Login')}>
                 <Text
                   style={{
                     color: COLORS.darkBlue,
@@ -207,7 +170,7 @@ const Register = () => {
                   Login
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </View>
       </Background>

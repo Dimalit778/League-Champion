@@ -1,14 +1,11 @@
 import { useRouter } from 'expo-router';
 
-import Button from '../components/Button';
-import COLORS from '../../constans/colors';
-import homeImg from '../../assets/images/HomeImg.png';
+import Button from '../../components/Button';
+import COLORS from '../../../constans/colors';
+import homeImg from '../../../assets/images/HomeImg.png';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { useAuth } from 'context/authContext';
 
-const StartPage = () => {
-  const { user, logout } = useAuth();
-
+const Welcome = () => {
   router = useRouter();
   return (
     <View style={{ flex: 1 }}>
@@ -28,20 +25,20 @@ const StartPage = () => {
             btnLabel="Login"
             bgColor={COLORS.darkBlue}
             textColor={COLORS.white}
-            Press={() => router.push('Login')}
+            Press={() => router.replace('/(auth)/Login')}
           />
           <Button
             btnLabel="Sign Up"
             bgColor={COLORS.darkBlue}
             textColor={COLORS.white}
-            Press={() => router.push('Register')}
+            Press={() => router.replace('Register')}
           />
         </View>
       </ImageBackground>
     </View>
   );
 };
-export default StartPage;
+export default Welcome;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
