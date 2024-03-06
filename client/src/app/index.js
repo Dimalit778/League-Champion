@@ -1,6 +1,11 @@
+import { AppContext } from 'context/AppContext';
 import { Redirect } from 'expo-router';
-import { ActivityIndicator, View } from 'react-native';
+import { useContext } from 'react';
 
 export default function App() {
-  return <Redirect href="(auth)/Register" />;
+  const { isAuth } = useContext(AppContext);
+  if (!isAuth) {
+    return <Redirect href="(auth)/Welcome" />;
+  }
+  return <Redirect href="(tabs)/home" />;
 }

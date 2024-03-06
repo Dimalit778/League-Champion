@@ -1,68 +1,52 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  Alert,
   TextInput,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import Spinner from 'react-native-loading-spinner-overlay';
+import CustomKeyboardView from 'components/CustomKeyboardView';
+import Background from 'components/Background';
+import Button from 'components/Button';
+import COLORS from '../../../constans/colors';
+import { AntDesign } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-
-import Background from '../../../assets/images/HomeImg.png';
-import CustomKeyboardView from '../../components/CustomKeyboardView';
-import COLORS from '../../../constans/colors';
-import Button from '../../components/Button';
-
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import 'core-js/stable/atob.js';
 
 const Register = () => {
   router = useRouter();
+
   const [name, setName] = useState();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [confirmPassword, setConfirmPassword] = useState();
-
-  // -->  REGISTER Function
   const handleRegister = async () => {
+    if (confirmPassword !== password) {
+      console.log('password not match');
+      return;
+    }
     const user = {
       name: name,
       email: email,
       password: password,
     };
-
-    if (confirmPassword !== password) {
-      Toast.show({
-        type: 'error',
-        text1: 'Passwords do not match',
-        visibilityTime: 3000,
-      });
-      return;
-    }
-
-    axios
-      .post('http://http://10.0.2.2:3000/auth/register', user)
-      .then((response) => {
-        console.log(response);
-        setEmail('');
-        setPassword('');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    axios.post('http://10.0.2.2:3000/auth/register', user).then((response) => {
+      console.log(response);
+    });
   };
 
   return (
     <CustomKeyboardView>
       <Background>
+        <Text>Register</Text>
         <View style={{ alignItems: 'center', width: 460 }}>
           <Text
             style={{
@@ -75,7 +59,6 @@ const Register = () => {
           >
             Register
           </Text>
-
           <View
             style={{
               backgroundColor: 'white',
@@ -96,8 +79,8 @@ const Register = () => {
             >
               Create a new account
             </Text>
-            FIRST NAME Input
-            {/* <View style={styles.inputBox}>
+            {/* FIRST NAME Input */}
+            <View style={styles.inputBox}>
               <AntDesign name="user" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
@@ -106,9 +89,9 @@ const Register = () => {
                 placeholderTextColor={COLORS.darkBlue}
                 onChangeText={(text) => setName(text)}
               />
-            </View> */}
+            </View>
             {/* EMAIL  Input */}
-            {/* <View style={styles.inputBox}>
+            <View style={styles.inputBox}>
               <Fontisto name="email" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
@@ -118,9 +101,9 @@ const Register = () => {
                 keyboardType={'email-address'}
                 onChangeText={(text) => setEmail(text)}
               />
-            </View> */}
+            </View>
             {/* PASSWORD Input */}
-            {/* <View style={styles.inputBox}>
+            <View style={styles.inputBox}>
               <Feather name="lock" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
@@ -130,9 +113,9 @@ const Register = () => {
                 secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
               />
-            </View> */}
+            </View>
             {/* CONFIRM PASSWORD Input */}
-            {/* <View style={styles.inputBox}>
+            <View style={styles.inputBox}>
               <Feather name="lock" size={28} color="black" />
               <TextInput
                 style={styles.textInput}
@@ -148,8 +131,8 @@ const Register = () => {
               bgColor={COLORS.darkBlue}
               btnLabel="Sign Up"
               Press={handleRegister}
-            /> */}
-            {/* <View
+            />
+            <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -170,7 +153,7 @@ const Register = () => {
                   Login
                 </Text>
               </TouchableOpacity>
-            </View> */}
+            </View>
           </View>
         </View>
       </Background>
@@ -179,7 +162,6 @@ const Register = () => {
 };
 
 export default Register;
-
 const styles = StyleSheet.create({
   inputBox: {
     flexDirection: 'row',

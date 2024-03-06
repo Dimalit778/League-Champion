@@ -4,9 +4,29 @@ import Button from '../../components/Button';
 import COLORS from '../../../constans/colors';
 import homeImg from '../../../assets/images/HomeImg.png';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//imports for JWT
+import { jwtDecode } from 'jwt-decode';
+import 'core-js/stable/atob.js';
 
 const Welcome = () => {
   router = useRouter();
+
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem('auth');
+  //       if (token) {
+  //         router.replace('/(tabs)/home');
+  //       }
+  //     } catch (error) {
+  //       console.log('Error', error);
+  //     }
+  //   };
+  //   checkLoginStatus();
+  // }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground source={homeImg} style={styles.image}>

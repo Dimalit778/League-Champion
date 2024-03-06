@@ -1,5 +1,10 @@
 import express from 'express';
-import { login, register, getAll } from '../controllers/authController.js';
+import {
+  login,
+  register,
+  getAll,
+  getUser,
+} from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -12,5 +17,7 @@ router.post('/register', register);
 router.post('/login', login);
 
 router.get('/getAll', getAll);
+
+router.get('/getUser/:id', getUser);
 
 export default router;

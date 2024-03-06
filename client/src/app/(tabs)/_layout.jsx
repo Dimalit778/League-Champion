@@ -1,21 +1,58 @@
 import { Feather } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { AppContext } from 'context/AppContext';
+// ICONS
+import { FontAwesome } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import React from 'react';
+import { Redirect, Tabs } from 'expo-router';
 
-const index = () => {
+import React, { useContext, useEffect } from 'react';
+import COLORS from '../../../constans/colors';
+
+const Layout = () => {
+  const { isAuth, isLoggedIn } = useContext(AppContext);
+
+  // useEffect(() => {
+  //   if (!isAuth) {
+  //     return <Redirect href="(auth)/Welcome" />;
+  //   }
+  // }, []);
+
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          height: 60,
+          backgroundColor: COLORS.tabsColor,
+        },
+        tabBarLabelStyle: {
+          color: COLORS.grey,
+          fontSize: 12,
+          fontWeight: 'bold',
+        },
+      }}
+    >
       <Tabs.Screen
-        name="home"
+        name="myLeagues"
         options={{
-          title: 'Home',
+          title: 'My Leagues',
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Feather name="eye" size={24} color="black" />
+              <FontAwesome6
+                name="users-between-lines"
+                size={36}
+                color={COLORS.white}
+              />
             ) : (
-              <Feather name="eye" size={24} color="grey" />
+              <FontAwesome6
+                name="users-between-lines"
+                size={24}
+                color={COLORS.grey}
+              />
             ),
         }}
       />
@@ -26,9 +63,27 @@ const index = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Feather name="eye" size={24} color="black" />
+              <Ionicons
+                name="football-outline"
+                size={38}
+                color={COLORS.white}
+                usermy
+              />
             ) : (
-              <Feather name="eye" size={24} color="grey" />
+              <Ionicons name="football-outline" size={28} color={COLORS.grey} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: 'Home',
+          headerShown: false,
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <FontAwesome name="home" size={42} color={COLORS.white} />
+            ) : (
+              <FontAwesome name="home" size={32} color={COLORS.grey} />
             ),
         }}
       />
@@ -39,12 +94,13 @@ const index = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Feather name="eye" size={24} color="black" />
+              <SimpleLineIcons name="chart" size={36} color={COLORS.white} />
             ) : (
-              <Feather name="eye" size={24} color="grey" />
+              <SimpleLineIcons name="chart" size={28} color={COLORS.grey} />
             ),
         }}
       />
+
       <Tabs.Screen
         name="myGames"
         options={{
@@ -52,9 +108,17 @@ const index = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Feather name="eye" size={24} color="black" />
+              <MaterialCommunityIcons
+                name="target-account"
+                size={36}
+                color={COLORS.white}
+              />
             ) : (
-              <Feather name="eye" size={24} color="grey" />
+              <MaterialCommunityIcons
+                name="target-account"
+                size={28}
+                color={COLORS.grey}
+              />
             ),
         }}
       />
@@ -62,4 +126,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Layout;

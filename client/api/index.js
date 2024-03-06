@@ -20,10 +20,7 @@ app.use('/auth', authRoute);
 const port = 3000;
 
 mongoose
-  .connect(process.env.DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.DB)
   .then(() => {
     console.log('Connected to Mongodb ChampionApp');
   })

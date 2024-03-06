@@ -1,17 +1,18 @@
 import User from '../models/userSchema.js';
 import asyncHandler from 'express-async-handler';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
+dotenv.config();
 //@ --->   < LOGIN > user & get token
 // route   POST /api/auth/login
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  // Check all fields are valid
-  if (!email || !password)
-    return res.status(400).send({ message: 'Fill all Fields' });
 
   // Convert the email to lower letters
   let LowerCaseEmail = email.toLowerCase();
+  console.log(LowerCaseEmail);
 
   //>>1 check if email exist
   const user = await User.findOne({ email: LowerCaseEmail });
@@ -21,13 +22,8 @@ const login = asyncHandler(async (req, res) => {
   }
 
   if (user && (await user.matchPassword(password))) {
-    const sendUser = {
-      id: user._id,
-      name: user.name,
-
-      email: user.email,
-    };
-    res.json(sendUser);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT);
+    return res.status(200).json({ token });
   } else {
     return res.status(400).send({ message: 'Wrong Password' });
   }
@@ -68,4 +64,15 @@ const getAll = asyncHandler(async (req, res) => {
 
   return res.status(200).send(allUsers);
 });
-export { login, register, getAll };
+const getUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const userExists = await User.findById(id);
+  if (!userExists) return res.status(401).json({ message: 'user not found' });
+
+  return res.status(200).json({
+    name: userExists.name,
+    email: userExists.email,
+    leagues: userExists.leagues,
+  });
+});
+export { login, register, getAll, getUser };

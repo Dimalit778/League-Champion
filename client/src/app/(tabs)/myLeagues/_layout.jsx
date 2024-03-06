@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" />
+        <Stack.Screen name="MyLeagues" />
       </Stack>
     </>
   );

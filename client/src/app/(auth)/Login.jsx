@@ -1,49 +1,47 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
-// ICONS
+import React, { useContext, useEffect, useState } from 'react';
+import CustomKeyboardView from 'components/CustomKeyboardView';
+import Background from 'components/Background';
+import COLORS from '../../../constans/colors';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-// TOAST ALERT
-import Toast from 'react-native-toast-message';
-// CUSTOM COMPONENTS
-import Background from '../../../assets/images/HomeImg.png';
-import CustomKeyboardView from '../../components/CustomKeyboardView';
-import COLORS from '../../../constans/colors';
-import Button from '../../components/Button';
-
+import Button from 'components/Button';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
+import 'core-js/stable/atob.js';
+import { AppContext } from 'context/AppContext';
 
 const Login = () => {
+  const { isAuth } = useContext(AppContext);
+  console.log(isAuth);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const router = useRouter();
+  router = useRouter();
 
-  // -->  LOGIN  Function
   const handleLogin = async () => {
     const user = {
       email: email,
       password: password,
     };
-    axios
-      .post('http://http://10.0.2.2:3000/auth/login', user)
-      .then((response) => {
-        console.log(response);
-        setEmail('');
-        setPassword('');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
+    axios.post('http://10.0.2.2:3000/auth/login', user).then((response) => {
+      console.log(response);
+      const token = response.data.token;
+      AsyncStorage.setItem('auth', token);
+      console.log(token);
+      router.replace('/(tabs)/home');
+    });
+  };
   return (
     <CustomKeyboardView>
       <Background>
@@ -116,7 +114,7 @@ const Login = () => {
               btnLabel="Login"
               textColor="white"
               bgColor={COLORS.darkBlue}
-              // Press={handleLogin}
+              Press={handleLogin}
             />
 
             <View
@@ -150,7 +148,6 @@ const Login = () => {
 };
 
 export default Login;
-
 const styles = StyleSheet.create({
   inputBox: {
     flexDirection: 'row',
