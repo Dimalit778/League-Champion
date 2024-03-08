@@ -23,13 +23,16 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     router.replace('/Login');
   };
-
+  // 'http://10.0.2.2:3000/auth/login',
   const login = async (user) => {
+    console.log('login handler');
     try {
+      console.log('login try');
       const { data } = await axios.post(
-        'http://10.0.2.2:3000/auth/login',
+        'http://localhost:3000/auth/login',
         user
       );
+      console.log('data', data.token);
       const token = JSON.stringify(data.token);
       getUser(token);
       AsyncStorage.setItem('token', token);
@@ -43,7 +46,11 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (user) => {
     try {
-      await axios.post('http://10.0.2.2:3000/auth/Register', user);
+      await axios.post(
+        // 'http://10.0.2.2:3000/auth/register'
+        'http://localhost:3000/auth/register',
+        user
+      );
       const msg = { status: 'success', message: 'User Created Successful' };
       return msg;
     } catch (err) {
@@ -58,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     const userId = decodedToken.userId;
     console.log('user id', userId);
     axios
-      .get(`http://10.0.2.2:3000/auth/getUser/${userId}`)
+      .get(`http://localhost:3000/auth/getUser/${userId}`)
       .then((response) => {
         setUser(response.data);
       })

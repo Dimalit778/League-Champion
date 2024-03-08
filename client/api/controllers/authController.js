@@ -8,6 +8,7 @@ dotenv.config();
 //@ --->   < LOGIN > user & get token
 // route   POST /api/auth/login
 const login = asyncHandler(async (req, res) => {
+  console.log('backend login');
   const { email, password } = req.body;
 
   // Convert the email to lower letters

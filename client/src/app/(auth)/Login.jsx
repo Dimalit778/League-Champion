@@ -41,7 +41,9 @@ const Login = () => {
       email: email,
       password: password,
     };
+    console.log(user);
     const { status, message } = await login(user);
+    console.log(status, message);
 
     if (status === 'success') {
       Toast.show({
