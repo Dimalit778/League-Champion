@@ -1,12 +1,13 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-const index = () => {
+const MyLeagues = () => {
+  console.log('tabs home page ');
   return (
     <View>
-      <Text>My games</Text>
+      <Text>My Leagues</Text>
     </View>
   );
 };
 
-export default index;
+export default MyLeagues;

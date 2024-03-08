@@ -1,6 +1,6 @@
 import { BaseToast, ErrorToast } from 'react-native-toast-message';
 
-const toastConfig = {
+const toastAlert = {
   success: (props) => (
     <BaseToast
       {...props}
@@ -43,4 +43,4 @@ const toastConfig = {
     />
   ),
 };
-export default toastConfig;
+export default toastAlert;

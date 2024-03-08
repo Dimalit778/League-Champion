@@ -19,18 +19,30 @@ import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import 'core-js/stable/atob.js';
+import { useAuth } from 'context/AuthContext';
 
 const Register = () => {
   router = useRouter();
+  const { register, isLoggedIn } = useAuth();
 
-  const [name, setName] = useState();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleRegister = async () => {
+    if (name == '' || email == '' || password == '' || confirmPassword == '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Please enter All Fields',
+      });
+      return;
+    }
     if (confirmPassword !== password) {
-      console.log('password not match');
+      Toast.show({
+        type: 'error',
+        text1: 'Passwords do not match',
+      });
       return;
     }
     const user = {
@@ -38,11 +50,20 @@ const Register = () => {
       email: email,
       password: password,
     };
-    axios.post('http://10.0.2.2:3000/auth/register', user).then((response) => {
-      console.log(response);
-    });
+    const { status, message } = await register(user);
+    if (status === 'success') {
+      Toast.show({
+        type: status,
+        text1: message,
+      });
+      router.replace('/Login');
+    } else {
+      Toast.show({
+        type: status,
+        text1: message,
+      });
+    }
   };
-
   return (
     <CustomKeyboardView>
       <Background>

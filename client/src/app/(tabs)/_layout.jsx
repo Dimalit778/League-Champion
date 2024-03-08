@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { AppContext } from 'context/AppContext';
+
 // ICONS
 import { FontAwesome } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -13,14 +13,6 @@ import React, { useContext, useEffect } from 'react';
 import COLORS from '../../../constans/colors';
 
 const Layout = () => {
-  const { isAuth, isLoggedIn } = useContext(AppContext);
-
-  // useEffect(() => {
-  //   if (!isAuth) {
-  //     return <Redirect href="(auth)/Welcome" />;
-  //   }
-  // }, []);
-
   return (
     <Tabs
       screenOptions={{
@@ -35,6 +27,7 @@ const Layout = () => {
         },
       }}
     >
+      {/* --> MY LEAGUES SCREEN <-- */}
       <Tabs.Screen
         name="myLeagues"
         options={{
@@ -56,6 +49,7 @@ const Layout = () => {
             ),
         }}
       />
+      {/* --> MATCHES SCREEN <-- */}
       <Tabs.Screen
         name="matches"
         options={{
@@ -74,6 +68,7 @@ const Layout = () => {
             ),
         }}
       />
+      {/* --> HOME SCREEN <-- */}
       <Tabs.Screen
         name="home"
         options={{
@@ -87,6 +82,7 @@ const Layout = () => {
             ),
         }}
       />
+      {/* --> STANDING SCREEN <-- */}
       <Tabs.Screen
         name="standing"
         options={{
@@ -100,7 +96,7 @@ const Layout = () => {
             ),
         }}
       />
-
+      {/* --> MY GAMES SCREEN <-- */}
       <Tabs.Screen
         name="myGames"
         options={{

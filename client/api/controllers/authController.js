@@ -50,13 +50,11 @@ const register = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
+    res.status(200).send({
+      message: 'User created successfully',
     });
   } else {
-    return res.status(400).send({ message: 'Failed Send You Email' });
+    return res.status(400).send({ message: 'Error , Login failed' });
   }
 });
 const getAll = asyncHandler(async (req, res) => {
@@ -64,12 +62,15 @@ const getAll = asyncHandler(async (req, res) => {
 
   return res.status(200).send(allUsers);
 });
+
 const getUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  const userExists = await User.findById(id);
+  const userId = req.params.id;
+
+  const userExists = await User.findById(userId);
   if (!userExists) return res.status(401).json({ message: 'user not found' });
 
-  return res.status(200).json({
+  res.status(200).json({
+    id: userId,
     name: userExists.name,
     email: userExists.email,
     leagues: userExists.leagues,

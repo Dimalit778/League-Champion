@@ -1,12 +1,13 @@
 import { View, Text } from 'react-native';
 import React, { useContext } from 'react';
-import { UserContext } from 'context/userContext';
+import { useAuth } from 'context/AuthContext';
 
 const Matches = () => {
-  // const { userData } = useContext(UserContext);
+  const { user } = useAuth();
   return (
     <View>
       <Text style={{ fontSize: 24 }}>Matches</Text>
+      <Text style={{ fontSize: 24 }}>{user?.name}</Text>
       {/* <Text style={{ fontSize: 24 }}>{userData?.name}</Text> */}
     </View>
   );

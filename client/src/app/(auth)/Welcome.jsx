@@ -1,61 +1,57 @@
 import { useRouter } from 'expo-router';
-
-import Button from '../../components/Button';
-import COLORS from '../../../constans/colors';
 import homeImg from '../../../assets/images/HomeImg.png';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import SpinnerAnimation from 'components/SpinnerAnimation';
+import { useAuth } from 'context/AuthContext';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//imports for JWT
-import { jwtDecode } from 'jwt-decode';
-import 'core-js/stable/atob.js';
 
 const Welcome = () => {
   router = useRouter();
 
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem('auth');
-  //       if (token) {
-  //         router.replace('/(tabs)/home');
-  //       }
-  //     } catch (error) {
-  //       console.log('Error', error);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, []);
+  const { isLoggedIn, setIsLoggedIn, getUser } = useAuth();
+  console.log('welcome ', isLoggedIn);
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await AsyncStorage.getItem('token');
+      console.log(token);
+      if (token) {
+        setIsLoggedIn(true);
+        getUser(token);
+        router.replace('(tabs)/home');
+      } else {
+        setIsLoggedIn(false);
+        router.replace('Login');
+      }
+    };
+    setTimeout(() => {
+      checkAuth();
+    }, 1500);
+  }, [isLoggedIn]);
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ImageBackground source={homeImg} style={styles.image}>
-        {/* BOX Header */}
-        <View style={styles.boxHeader}>
-          <Text style={styles.textHeader}>League Champion</Text>
-        </View>
+        <View style={{ flex: 1 }}>
+          {/* BOX Header */}
+          <View style={styles.boxHeader}>
+            <Text style={styles.textHeader}>League Champion</Text>
+          </View>
 
-        {/* BOX Section */}
-        <View style={styles.boxSection}>
-          <Text style={styles.textHeader}>SECTION</Text>
-        </View>
-        {/* BOX Buttons */}
-        <View style={{ marginHorizontal: 20 }}>
-          <Button
-            btnLabel="Login"
-            bgColor={COLORS.darkBlue}
-            textColor={COLORS.white}
-            Press={() => router.replace('/(auth)/Login')}
-          />
-          <Button
-            btnLabel="Sign Up"
-            bgColor={COLORS.darkBlue}
-            textColor={COLORS.white}
-            Press={() => router.replace('Register')}
-          />
+          {/* BOX Section */}
+          <View style={styles.boxSection}>
+            <Text style={styles.textHeader}>SECTION</Text>
+            <SpinnerAnimation />
+          </View>
         </View>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 export default Welcome;
@@ -78,6 +74,6 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   boxSection: {
-    height: '40%',
+    flex: 1,
   },
 });

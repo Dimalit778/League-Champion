@@ -17,30 +17,44 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 import 'core-js/stable/atob.js';
-import { AppContext } from 'context/AppContext';
+import Toast from 'react-native-toast-message';
+import { useAuth } from 'context/AuthContext';
 
 const Login = () => {
-  const { isAuth } = useContext(AppContext);
-  console.log(isAuth);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { login, isLoggedIn } = useAuth();
+  console.log(' 1 - Login page ->' + isLoggedIn);
 
   router = useRouter();
 
   const handleLogin = async () => {
+    if (email == '' || password == '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Please enter All Fields',
+      });
+      return;
+    }
     const user = {
       email: email,
       password: password,
     };
+    const { status, message } = await login(user);
 
-    axios.post('http://10.0.2.2:3000/auth/login', user).then((response) => {
-      console.log(response);
-      const token = response.data.token;
-      AsyncStorage.setItem('auth', token);
-      console.log(token);
-      router.replace('/(tabs)/home');
-    });
+    if (status === 'success') {
+      Toast.show({
+        type: status,
+        text1: message,
+      });
+      router.replace('(tabs)/home');
+    } else {
+      Toast.show({
+        type: status,
+        text1: message,
+      });
+    }
   };
   return (
     <CustomKeyboardView>

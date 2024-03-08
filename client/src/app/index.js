@@ -1,11 +1,6 @@
-import { AppContext } from 'context/AppContext';
-import { Redirect } from 'expo-router';
-import { useContext } from 'react';
+import { useAuth } from 'context/AuthContext';
+import { Redirect, useRouter } from 'expo-router';
 
 export default function App() {
-  const { isAuth } = useContext(AppContext);
-  if (!isAuth) {
-    return <Redirect href="(auth)/Welcome" />;
-  }
-  return <Redirect href="(tabs)/home" />;
+  return <Redirect href="Welcome" />;
 }
