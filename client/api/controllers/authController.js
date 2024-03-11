@@ -8,12 +8,10 @@ dotenv.config();
 //@ --->   < LOGIN > user & get token
 // route   POST /api/auth/login
 const login = asyncHandler(async (req, res) => {
-  console.log('backend login');
   const { email, password } = req.body;
 
   // Convert the email to lower letters
   let LowerCaseEmail = email.toLowerCase();
-  console.log(LowerCaseEmail);
 
   //>>1 check if email exist
   const user = await User.findOne({ email: LowerCaseEmail });
@@ -24,7 +22,9 @@ const login = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT);
-    return res.status(200).json({ token });
+    const userData = { id: user._id, name: user.name, email: user.email };
+
+    return res.status(200).json({ userData, token });
   } else {
     return res.status(400).send({ message: 'Wrong Password' });
   }

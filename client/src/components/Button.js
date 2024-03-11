@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 
-const Button = ({ bgColor, btnLabel, textColor, Press }) => {
+const Button = ({ bgColor, btnLabel, textColor, Press, textFont }) => {
   return (
     <TouchableOpacity
       onPress={Press}
@@ -13,7 +13,9 @@ const Button = ({ bgColor, btnLabel, textColor, Press }) => {
         marginVertical: 10,
       }}
     >
-      <Text style={{ color: textColor, fontSize: 25, fontWeight: 'bold' }}>
+      <Text
+        style={{ color: textColor, fontSize: textFont, fontWeight: 'bold' }}
+      >
         {btnLabel}
       </Text>
     </TouchableOpacity>

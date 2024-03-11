@@ -13,21 +13,22 @@ import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Button from 'components/Button';
 import { useRouter } from 'expo-router';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { jwtDecode } from 'jwt-decode';
-import 'core-js/stable/atob.js';
+
 import Toast from 'react-native-toast-message';
-import { useAuth } from 'context/AuthContext';
+// import { useAuth } from 'context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from 'redux/slices/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, isLoggedIn } = useAuth();
-  console.log(' 1 - Login page ->' + isLoggedIn);
+  // const { login } = useAuth();
 
   router = useRouter();
+  // hooks
+  const dispatch = useDispatch();
+  const { userData, token, isLoading } = useSelector((state) => state.auth);
 
   const handleLogin = async () => {
     if (email == '' || password == '') {
@@ -41,22 +42,20 @@ const Login = () => {
       email: email,
       password: password,
     };
-    console.log(user);
-    const { status, message } = await login(user);
-    console.log(status, message);
-
-    if (status === 'success') {
-      Toast.show({
-        type: status,
-        text1: message,
-      });
-      router.replace('(tabs)/home');
-    } else {
-      Toast.show({
-        type: status,
-        text1: message,
-      });
-    }
+    dispatch(login(user)).then((action) => {
+      if (action.error) {
+        Toast.show({
+          type: 'error',
+          text1: action.payload,
+        });
+      } else {
+        Toast.show({
+          type: 'success',
+          text1: 'Login Successfully',
+        });
+        router.replace('(tabs)/home');
+      }
+    });
   };
   return (
     <CustomKeyboardView>
@@ -130,6 +129,7 @@ const Login = () => {
               btnLabel="Login"
               textColor="white"
               bgColor={COLORS.darkBlue}
+              textFont={24}
               Press={handleLogin}
             />
 

@@ -8,33 +8,23 @@ import {
   View,
 } from 'react-native';
 import SpinnerAnimation from 'components/SpinnerAnimation';
-import { useAuth } from 'context/AuthContext';
-import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Welcome = () => {
   router = useRouter();
+  // const { token } = useSelector((state) => state.auth);
 
-  const { isLoggedIn, setIsLoggedIn, getUser } = useAuth();
-  console.log('welcome ', isLoggedIn);
+  // useEffect(() => {
+  //   if (!token) {
+  //     console.log('no');
+  //     router.replace('Login');
+  //   } else {
+  //     console.log('yes');
+  //     router.replace('(tabs)/home');
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
-      if (token) {
-        setIsLoggedIn(true);
-        getUser(token);
-        router.replace('(tabs)/home');
-      } else {
-        setIsLoggedIn(false);
-        router.replace('Login');
-      }
-    };
-    setTimeout(() => {
-      checkAuth();
-    }, 1500);
-  }, [isLoggedIn]);
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ImageBackground source={homeImg} style={styles.image}>

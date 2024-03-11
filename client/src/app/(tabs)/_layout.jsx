@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
-
+import { jwtDecode } from 'jwt-decode';
+import 'core-js/stable/atob.js';
 // ICONS
 import { FontAwesome } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -7,12 +8,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Redirect, Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 
 import React, { useContext, useEffect } from 'react';
 import COLORS from '../../../constans/colors';
+import { useSelector } from 'react-redux';
 
 const Layout = () => {
+  const { token } = useSelector((state) => state.auth);
+  console.log('home -> ', token);
   return (
     <Tabs
       screenOptions={{

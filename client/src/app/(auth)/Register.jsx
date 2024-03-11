@@ -4,9 +4,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import CustomKeyboardView from 'components/CustomKeyboardView';
 import Background from 'components/Background';
@@ -16,14 +15,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import 'core-js/stable/atob.js';
 import { useAuth } from 'context/AuthContext';
 
 const Register = () => {
   router = useRouter();
-  const { register, isLoggedIn } = useAuth();
+  const { register } = useAuth();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -151,6 +147,7 @@ const Register = () => {
               textColor="white"
               bgColor={COLORS.darkBlue}
               btnLabel="Sign Up"
+              textFont={24}
               Press={handleRegister}
             />
             <View
