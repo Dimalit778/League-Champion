@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoute from './routes/authRoute.js';
+import leagueRoute from './routes/leagueRoute.js';
 import { errorHandler } from './utilits/errorMiddleware.js';
 
 const app = express();
@@ -12,8 +13,8 @@ dotenv.config();
 
 app.use(bodyParser.json());
 
-// //@ ---- { User Routes } ---- //
-// app.use('users', userRoute);
+// //@ ---- { League Routes } ---- //
+app.use('/league', leagueRoute);
 //@ ---- { Auth Routes } ---- //
 app.use('/auth', authRoute);
 

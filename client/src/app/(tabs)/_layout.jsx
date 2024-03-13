@@ -1,6 +1,3 @@
-import { Feather } from '@expo/vector-icons';
-import { jwtDecode } from 'jwt-decode';
-import 'core-js/stable/atob.js';
 // ICONS
 import { FontAwesome } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -8,15 +5,29 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Tabs, useRouter } from 'expo-router';
+import { Tabs } from 'expo-router';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import COLORS from '../../../constans/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from 'redux/slices/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Layout = () => {
   const { token } = useSelector((state) => state.auth);
-  console.log('home -> ', token);
+  const { user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    try {
+      dispatch(getUser(token));
+      console.log('User');
+    } catch (err) {
+      console.log('error: ' + err);
+    }
+  }, []);
+
   return (
     <Tabs
       screenOptions={{

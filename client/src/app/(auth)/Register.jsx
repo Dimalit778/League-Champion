@@ -15,11 +15,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import { useAuth } from 'context/AuthContext';
+//API
+import { register } from 'redux/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Register = () => {
-  router = useRouter();
-  const { register } = useAuth();
+  // hooks
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -46,19 +49,21 @@ const Register = () => {
       email: email,
       password: password,
     };
-    const { status, message } = await register(user);
-    if (status === 'success') {
-      Toast.show({
-        type: status,
-        text1: message,
-      });
-      router.replace('/Login');
-    } else {
-      Toast.show({
-        type: status,
-        text1: message,
-      });
-    }
+    dispatch(register(user)).then((action) => {
+      if (action.error) {
+        Toast.show({
+          type: 'error',
+          text1: action.payload,
+        });
+      } else {
+        Toast.show({
+          type: 'success',
+          text1: 'Login Successfully',
+        });
+
+        router.replace('Login');
+      }
+    });
   };
   return (
     <CustomKeyboardView>

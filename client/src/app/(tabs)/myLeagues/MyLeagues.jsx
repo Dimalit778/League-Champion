@@ -2,24 +2,27 @@ import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import Button from 'components/Button';
 import COLORS from '../../../../constans/colors';
-import { useAuth } from 'context/AuthContext';
-const leagueTest = [
-  {
-    id: '1',
-    name: 'team',
-  },
-  {
-    id: '2',
-    name: 'team',
-  },
-  {
-    id: '3',
-    name: 'team',
-  },
-];
+import { useSelector } from 'react-redux';
+
+// const leagueTest = [
+//   {
+//     id: '1',
+//     name: 'team',
+//   },
+//   {
+//     id: '2',
+//     name: 'team',
+//   },
+//   {
+//     id: '3',
+//     name: 'team',
+//   },
+// ];
 const MyLeagues = () => {
-  const { user } = useAuth();
-  console.log('MY LEAGUES ==> ', user);
+  const { user } = useSelector((state) => state.user);
+  const { name, email, leagues } = user;
+  console.log(leagues);
+
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
       {/* HEADER */}
@@ -36,8 +39,8 @@ const MyLeagues = () => {
       <View style={{ flex: 1, backgroundColor: 'red' }}>
         {/* LIST */}
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          {leagueTest ? (
-            leagueTest.map((leg) => {
+          {leagues?.length > 0 ? (
+            leagues.map((leg) => {
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                 {leg.name}
               </Text>;

@@ -13,17 +13,15 @@ import { useSelector } from 'react-redux';
 
 const Welcome = () => {
   router = useRouter();
-  // const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     console.log('no');
-  //     router.replace('Login');
-  //   } else {
-  //     console.log('yes');
-  //     router.replace('(tabs)/home');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!token) {
+      router.replace('Login');
+    } else {
+      router.replace('(tabs)/home');
+    }
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>

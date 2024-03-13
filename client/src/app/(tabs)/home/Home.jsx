@@ -1,33 +1,36 @@
 import { View, Text, SafeAreaView } from 'react-native';
-import React, { useContext, useEffect } from 'react';
-import { useAuth } from 'context/AuthContext';
+import React, { useEffect } from 'react';
+
 import Button from 'components/Button';
 import { useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
+// import { useGetUserQuery } from 'redux/services/userApi';
+import { logoutUser } from 'redux/slices/authSlice';
 const Home = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { logout } = useSelector((state) => state.auth);
-  // console.log('tabs home page ');
-  // useEffect(() => {
-  //   if (user?.leagues.length == 0) {
-  //     router.replace('/MyLeagues');
-  //   }
-  // }, [user]);
-  const logoutUser = () => {
-    dispatch(logout);
+  const { user } = useSelector((state) => state.user);
+
+  console.log('Home - ', user);
+  const logout = () => {
+    try {
+      dispatch(logoutUser());
+      router.replace('Welcome');
+    } catch (err) {
+      console.log('error -> ', err);
+    }
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: 24 }}>Homeeeeeeeeee</Text>
-        {/* <Text style={{ fontSize: 24 }}>{user?.name}</Text>
+        <Text style={{ fontSize: 24 }}>{user?.name}</Text>
         <Text style={{ fontSize: 24 }}>{user?.email}</Text>
-        <Text style={{ fontSize: 24 }}>{user?.leagues}</Text> */}
+        <Text style={{ fontSize: 24 }}>{user?.leagues}</Text>
       </View>
       <View>
-        <Button btnLabel="Logout" Press={logoutUser} />
+        <Button btnLabel="Logout" Press={logout} />
       </View>
     </SafeAreaView>
   );

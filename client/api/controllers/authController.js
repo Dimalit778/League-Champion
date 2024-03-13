@@ -22,9 +22,8 @@ const login = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT);
-    const userData = { id: user._id, name: user.name, email: user.email };
 
-    return res.status(200).json({ userData, token });
+    return res.status(200).json({ token });
   } else {
     return res.status(400).send({ message: 'Wrong Password' });
   }

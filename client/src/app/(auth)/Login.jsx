@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CustomKeyboardView from 'components/CustomKeyboardView';
 import Background from 'components/Background';
 import COLORS from '../../../constans/colors';
@@ -15,7 +15,7 @@ import Button from 'components/Button';
 import { useRouter } from 'expo-router';
 
 import Toast from 'react-native-toast-message';
-// import { useAuth } from 'context/AuthContext';
+//API
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'redux/slices/authSlice';
 
@@ -23,13 +23,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // const { login } = useAuth();
-
-  router = useRouter();
   // hooks
   const dispatch = useDispatch();
-  const { userData, token, isLoading } = useSelector((state) => state.auth);
+  const router = useRouter();
 
+  // login function
   const handleLogin = async () => {
     if (email == '' || password == '') {
       Toast.show({
@@ -53,6 +51,7 @@ const Login = () => {
           type: 'success',
           text1: 'Login Successfully',
         });
+
         router.replace('(tabs)/home');
       }
     });

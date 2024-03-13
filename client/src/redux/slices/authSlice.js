@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { persistor } from 'redux/store';
 ISO_URL = 'http://localhost:3000/auth';
 ANDROID_URL = 'http://10.0.2.2:3000/auth';
 
@@ -15,6 +15,7 @@ const initialState = {
 export const login = createAsyncThunk('login', async (user, thunkApi) => {
   try {
     const res = await axios.post(`${ANDROID_URL}/login`, user);
+    console.log(res.data);
     return res.data;
   } catch (error) {
     return thunkApi.rejectWithValue(error.response.data.message);
@@ -33,18 +34,24 @@ export const register = createAsyncThunk('register', async (user, thunkApi) => {
 });
 
 const authSlice = createSlice({
-  name: 'authSlice',
+  name: 'authUser',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: async (state, action) => {
+      state = initialState;
+      await AsyncStorage.removeItem('auth');
+      console.log('logged out user ');
+    },
+  },
   extraReducers: (builder) => {
     // login cases
     builder.addCase(login.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      state.isLoggedIn = true;
       state.isLoading = false;
       state.success = 'Login successfully';
+      state.error = null;
       state.token = action.payload.token;
     });
     builder.addCase(login.rejected, (state, action) => {
@@ -53,5 +60,5 @@ const authSlice = createSlice({
     });
   },
 });
-
+export const { logoutUser } = authSlice.actions;
 export default authSlice.reducer;

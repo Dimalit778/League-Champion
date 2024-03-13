@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
+import { setupListeners } from '@reduxjs/toolkit/query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistReducer,
@@ -12,23 +12,25 @@ import {
   REGISTER,
 } from 'redux-persist';
 import authSlice from './slices/authSlice';
-
-// const reducers = combineReducers({
-//   auth: authSlice,
-// });
+import userSlice from './slices/userSlice';
+import { userApi } from './services/userApi';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // whitelist: ['auth'],
+  blocklist: ['user'],
 };
 
-const persistedReducer = persistReducer(persistConfig, authSlice);
+const persistedAuthReducer = persistReducer(persistConfig, authSlice);
+
+const rootReducer = combineReducers({
+  auth: persistedAuthReducer,
+  user: userSlice,
+});
 
 const store = configureStore({
-  reducer: {
-    auth: persistedReducer,
-  },
+  reducer: rootReducer,
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -36,6 +38,7 @@ const store = configureStore({
       },
     }),
 });
-
+// .concat(userApi.middleware),
 const persistor = persistStore(store);
+// setupListeners(store.dispatch);
 export { store, persistor };
