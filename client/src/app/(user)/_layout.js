@@ -52,7 +52,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         icon={({ color, size }) => (
           <Ionicons
-            name="settings-outline"
+            name="settings"
             size={size}
             color={pathname == '/settings' ? '#fff' : '#000'}
           />
@@ -77,19 +77,15 @@ export default function DrawerLayout() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
+        headerTitle: 'League Champion',
         headerStyle: { backgroundColor: COLORS.tabsColor },
+        headerTintColor: 'white',
+        headerTitleAlign: 'center',
 
         // drawerStyle: { backgroundColor: COLORS.tabsColor },
       }}
     >
-      <Drawer.Screen
-        name="(tabs)"
-        options={{
-          headerTitle: 'League Champion',
-          headerTitleAlign: 'center',
-          headerTintColor: 'white',
-        }}
-      />
+      <Drawer.Screen name="(tabs)" />
     </Drawer>
   );
 }
