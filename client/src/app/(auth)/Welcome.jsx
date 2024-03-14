@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import homeImg from '../../../assets/images/HomeImg.png';
 import {
   ImageBackground,
@@ -19,7 +19,7 @@ const Welcome = () => {
     if (!token) {
       router.replace('Login');
     } else {
-      router.replace('(tabs)/home');
+      router.replace('(user)/(tabs)/home');
     }
   }, []);
 

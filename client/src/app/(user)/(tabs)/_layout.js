@@ -8,12 +8,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 import React, { useEffect } from 'react';
-import COLORS from '../../../constans/colors';
+import COLORS from '../../../../constans/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from 'redux/slices/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Layout = () => {
+const TabsLayout = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
 
@@ -137,4 +136,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default TabsLayout;

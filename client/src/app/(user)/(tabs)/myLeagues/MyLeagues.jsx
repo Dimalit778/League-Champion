@@ -1,27 +1,16 @@
 import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import Button from 'components/Button';
-import COLORS from '../../../../constans/colors';
+import COLORS from '../../../../../constans/colors';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'expo-router';
 
-// const leagueTest = [
-//   {
-//     id: '1',
-//     name: 'team',
-//   },
-//   {
-//     id: '2',
-//     name: 'team',
-//   },
-//   {
-//     id: '3',
-//     name: 'team',
-//   },
-// ];
 const MyLeagues = () => {
   const { user } = useSelector((state) => state.user);
   const { name, email, leagues } = user;
   console.log(leagues);
+
+  const router = useRouter();
 
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
@@ -58,17 +47,20 @@ const MyLeagues = () => {
           padding: 25,
         }}
       >
+        {/* -- Join League -- */}
         <Button
           btnLabel="Join League"
           bgColor={COLORS.darkBlue}
           textColor={COLORS.white}
           textFont={16}
         />
+        {/* -- Create New League -- */}
         <Button
           btnLabel="Create New League"
           bgColor={COLORS.darkBlue}
           textColor={COLORS.white}
           textFont={16}
+          Press={() => router.push('/AddLeague')}
         />
       </View>
     </SafeAreaView>

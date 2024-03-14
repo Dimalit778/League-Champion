@@ -22,7 +22,7 @@ const Home = () => {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: 24 }}>Homeeeeeeeeee</Text>
         <Text style={{ fontSize: 24 }}>{user?.name}</Text>
