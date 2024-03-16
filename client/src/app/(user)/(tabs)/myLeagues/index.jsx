@@ -5,6 +5,7 @@ import COLORS from '../../../../../constans/colors';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 
+//@ ---> MyLeagues Page
 const MyLeagues = () => {
   const { user } = useSelector((state) => state.user);
   const { name, email, leagues } = user;
@@ -13,7 +14,7 @@ const MyLeagues = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {/* HEADER */}
       <View
         style={{
@@ -60,7 +61,7 @@ const MyLeagues = () => {
           bgColor={COLORS.darkBlue}
           textColor={COLORS.white}
           textFont={16}
-          Press={() => router.push('/AddLeague')}
+          Press={() => router.push('myLeagues/Add')}
         />
       </View>
     </SafeAreaView>

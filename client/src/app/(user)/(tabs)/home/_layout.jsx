@@ -1,14 +1,9 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 
+//@ ---> Home Layout
 const Layout = () => {
-  return (
-    <>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" />
-      </Stack>
-    </>
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 };
 
 export default Layout;

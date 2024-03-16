@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 dotenv.config();
 
 app.use(bodyParser.json());
-
+// app.use(cors());
 // //@ ---- { League Routes } ---- //
 app.use('/league', leagueRoute);
 //@ ---- { Auth Routes } ---- //

@@ -1,16 +1,16 @@
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const MyGames = () => {
+//@ ---> Standing Page
+const Standing = () => {
   const { user } = useSelector((state) => state.user);
-
   return (
-    <View>
-      <Text>MyGames</Text>
+    <SafeAreaView>
+      <Text>Standing</Text>
       <Text style={{ fontSize: 24 }}>{user?.name}</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default MyGames;
+export default Standing;
