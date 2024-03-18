@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-const AddLeague = () => {
+const index = () => {
   return (
     <View>
-      <Text>AddLeague</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
 
-export default AddLeague;
+export default Profile;

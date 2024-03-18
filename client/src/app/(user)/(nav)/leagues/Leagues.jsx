@@ -1,12 +1,13 @@
 import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import Button from 'components/Button';
-import COLORS from '../../../../../constans/colors';
+
 import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
+import COLORS from '../../../../../constans/colors';
 
-//@ ---> MyLeagues Page
-const MyLeagues = () => {
+//@ ---> Leagues Page
+const Leagues = () => {
   const { user } = useSelector((state) => state.user);
   const { name, email, leagues } = user;
   console.log(leagues);
@@ -68,4 +69,4 @@ const MyLeagues = () => {
   );
 };
 
-export default MyLeagues;
+export default Leagues;

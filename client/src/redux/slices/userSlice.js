@@ -18,7 +18,7 @@ export const getUser = createAsyncThunk('getUser', async (token, thunkApi) => {
     const decoded = jwtDecode(token);
     let id = decoded.userId;
     const { data } = await axios.get(
-      `http://10.100.102.24:3000/auth/getUser/${id}`
+      `http://192.20.0.59:3000/auth/getUser/${id}`
     );
     console.log(data);
     return data;

@@ -3,7 +3,7 @@ import React from 'react';
 import { Stack } from 'expo-router';
 
 const Layout = () => {
-  return <Stack.Screen name="Settings" />;
+  return <Stack name="Leagues" screenOptions={{ headerShown: true }} />;
 };
 
 export default Layout;
