@@ -3,7 +3,12 @@ import React from 'react';
 import { Stack } from 'expo-router';
 
 const Layout = () => {
-  return <Stack name="Profile" screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack>
+      {/* <Stack.Screen name="Leagues" /> */}
+      <Stack.Screen name="index" />
+    </Stack>
+  );
 };
 
 export default Layout;

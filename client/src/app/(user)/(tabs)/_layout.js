@@ -31,6 +31,7 @@ const TabsLayout = () => {
     <Tabs
       screenOptions={{
         headerLeft: () => <DrawerToggleButton tintColor="white" />,
+
         tabBarStyle: {
           backgroundColor: COLORS.tabsColor,
         },
@@ -40,7 +41,7 @@ const TabsLayout = () => {
           fontSize: 12,
           fontWeight: 'bold',
         },
-        // -- > TOP NAV
+        // // -- > TOP NAV
         headerStyle: { backgroundColor: COLORS.tabsColor },
         headerTintColor: 'white',
         headerTitleAlign: 'center',

@@ -55,6 +55,7 @@ const Leagues = () => {
           bgColor={COLORS.darkBlue}
           textColor={COLORS.white}
           textFont={16}
+          Press={() => router.push('JoinLeague')}
         />
         {/* -- Create New League -- */}
         <Button
@@ -62,7 +63,7 @@ const Leagues = () => {
           bgColor={COLORS.darkBlue}
           textColor={COLORS.white}
           textFont={16}
-          Press={() => router.push('myLeagues/Add')}
+          Press={() => router.push('/CreateLeague')}
         />
       </View>
     </SafeAreaView>

@@ -1,7 +1,8 @@
-import { router, usePathname } from 'expo-router';
+import { Link, router, usePathname } from 'expo-router';
 import {
   SimpleLineIcons,
   FontAwesome6,
+  FontAwesome5,
   FontAwesome,
   Ionicons,
 } from '@expo/vector-icons';
@@ -32,8 +33,31 @@ export const CustomDrawerContent = (props) => {
             <Text style={styles.userEmail}>{user?.email}</Text>
           </View>
         </View>
-        {/* //? ----> Profile Nav < ----- */}
+
         <View style={{ gap: 10 }}>
+          {/* //? ----> Home Nav < ----- */}
+          <DrawerItem
+            icon={({ color, size }) => (
+              <FontAwesome5
+                name="home"
+                size={size}
+                color={pathname == '/profile' ? '#fff' : '#000'}
+              />
+            )}
+            label={'Home'}
+            labelStyle={[
+              styles.navItemLabel,
+              { color: pathname == '/profile' ? '#fff' : '#000' },
+            ]}
+            style={[
+              styles.navItem,
+              { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
+            ]}
+            onPress={() => {
+              router.navigate('(user)/(tabs)/home');
+            }}
+          />
+          {/* //? ----> Profile Nav < ----- */}
           <DrawerItem
             icon={({ color, size }) => (
               <FontAwesome
@@ -52,7 +76,7 @@ export const CustomDrawerContent = (props) => {
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
             ]}
             onPress={() => {
-              router.push('/(nav)/profile/');
+              router.push('/(drawer)/Profile');
             }}
           />
           {/* //? ----> Leagues Nav < ----- */}
@@ -74,7 +98,7 @@ export const CustomDrawerContent = (props) => {
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
             ]}
             onPress={() => {
-              router.push('/(nav)/leagues/');
+              router.push('(drawer)/leagues/');
             }}
           />
           {/* //? ----> Settings Nav < ----- */}
@@ -96,7 +120,7 @@ export const CustomDrawerContent = (props) => {
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
             ]}
             onPress={() => {
-              router.push('/(nav)/Settings');
+              router.push('/(drawer)/Settings');
             }}
           />
         </View>
