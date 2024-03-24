@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-ISO_URL = 'http://10.100.102.24:3000/auth';
-ANDROID_URL = 'http://10.0.2.2:3000/auth';
+// HOME_URL = 'http://10.100.102.24:3000/auth';
 
+// WORKֹֹ_URL - http://192.20.0.59:3000
 const initialState = {
   token: null,
   isLoading: false,
@@ -14,7 +14,7 @@ const initialState = {
 // login
 export const login = createAsyncThunk('login', async (user, thunkApi) => {
   try {
-    const res = await axios.post('http://192.20.0.59:3000/auth/login', user);
+    const res = await axios.post('http://10.100.102.24:3000/auth/login', user);
     console.log(res.data);
     return res.data;
   } catch (error) {
@@ -25,7 +25,7 @@ export const login = createAsyncThunk('login', async (user, thunkApi) => {
 // register
 export const register = createAsyncThunk('register', async (user, thunkApi) => {
   try {
-    await axios.post('http://192.20.0.59:3000/auth/register', user);
+    await axios.post('http://10.100.102.24:3000/auth/auth/register', user);
     const msg = { status: 'success', message: 'User Created Successful' };
     return msg;
   } catch (error) {

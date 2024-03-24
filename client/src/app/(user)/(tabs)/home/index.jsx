@@ -37,7 +37,6 @@ const Home = () => {
         <Text style={{ fontSize: 24 }}>Homeeeeeeeeee</Text>
         <Text style={{ fontSize: 24 }}>{user?.name}</Text>
         <Text style={{ fontSize: 24 }}>{user?.email}</Text>
-        <Text style={{ fontSize: 24 }}>{user?.leagues}</Text>
       </View>
       <View>
         <Button btnLabel="Logout" Press={logout} />

@@ -1,11 +1,15 @@
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
+import { Stack } from 'expo-router';
 
 const Profile = () => {
   return (
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <SafeAreaView>
+      <Stack.Screen options={{ title: 'Profile', headerShown: true }} />
+      <View>
+        <Text>Profile</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,11 +1,15 @@
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
+import { Stack } from 'expo-router';
 
 const Settings = () => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <SafeAreaView>
+      <Stack.Screen options={{ title: 'Settings', headerShown: true }} />
+      <View>
+        <Text>Settings</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

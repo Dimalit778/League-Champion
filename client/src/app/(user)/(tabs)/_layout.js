@@ -14,18 +14,18 @@ import { getUser } from 'redux/slices/userSlice';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 
 const TabsLayout = () => {
-  // const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   try {
-  //     dispatch(getUser(token));
-  //     console.log('Found user data');
-  //   } catch (err) {
-  //     console.log('error: ' + err);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      dispatch(getUser(token));
+      console.log('Found user data');
+    } catch (err) {
+      console.log('error: ' + err);
+    }
+  }, []);
 
   return (
     <Tabs

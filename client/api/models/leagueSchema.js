@@ -8,8 +8,7 @@ const leagueSchema = mongoose.Schema({
     max: 30,
   },
   codeLeague: {
-    type: Number,
-    required: true,
+    type: String,
   },
   league: {
     type: String,

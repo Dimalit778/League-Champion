@@ -20,18 +20,10 @@ export default function DrawerLayout() {
           headerShown: false,
         }}
       />
-      <Drawer.Screen
-        name="(drawer)/Profile"
+      {/* <Drawer.Screen
+        name="(drawer)"
         options={{ headerShown: true, title: 'Profile' }}
-      />
-      <Drawer.Screen
-        name="(drawer)/Leagues"
-        options={{ headerShown: true, title: 'Leagues' }}
-      />
-      <Drawer.Screen
-        name="(drawer)/Settings"
-        options={{ headerShown: true, title: 'Settings' }}
-      />
+      /> */}
     </Drawer>
   );
 }

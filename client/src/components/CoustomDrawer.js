@@ -98,7 +98,7 @@ export const CustomDrawerContent = (props) => {
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
             ]}
             onPress={() => {
-              router.push('(drawer)/leagues/');
+              router.navigate('/(drawer)/Leagues');
             }}
           />
           {/* //? ----> Settings Nav < ----- */}
@@ -120,7 +120,7 @@ export const CustomDrawerContent = (props) => {
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
             ]}
             onPress={() => {
-              router.push('/(drawer)/Settings');
+              router.navigate('/(drawer)/Settings');
             }}
           />
         </View>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
     marginBottom: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
   },
   userImg: {
     borderRadius: 40,
