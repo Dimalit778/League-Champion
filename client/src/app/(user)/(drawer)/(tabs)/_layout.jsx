@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Stack, Tabs } from 'expo-router';
 
 import React, { useEffect } from 'react';
-import COLORS from '../../../../constans/colors';
+import COLORS from '../../../../../constans/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from 'redux/slices/userSlice';
 import { DrawerToggleButton } from '@react-navigation/drawer';
@@ -18,30 +18,34 @@ const TabsLayout = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const getData = () => {
     try {
       dispatch(getUser(token));
       console.log('Found user data');
     } catch (err) {
       console.log('error: ' + err);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [token]);
 
   return (
     <Tabs
       screenOptions={{
         headerLeft: () => <DrawerToggleButton tintColor="white" />,
-
+        // -- > BOTTOM TABS
         tabBarStyle: {
           backgroundColor: COLORS.tabsColor,
         },
-        // -- > BOTTOM TABS
+
         tabBarLabelStyle: {
           color: COLORS.grey,
           fontSize: 12,
           fontWeight: 'bold',
         },
-        // // -- > TOP NAV
+        //  -- > TOP NAV
         headerStyle: { backgroundColor: COLORS.tabsColor },
         headerTintColor: 'white',
         headerTitleAlign: 'center',
@@ -106,6 +110,11 @@ const TabsLayout = () => {
               />
             ),
         }}
+      />
+
+      <Tabs.Screen
+        name="index"
+        options={{ href: null, tabBarAccessibilityLabel: false }}
       />
     </Tabs>
   );

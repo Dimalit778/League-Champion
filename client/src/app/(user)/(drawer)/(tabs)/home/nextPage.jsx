@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-const createLeague = () => {
+const nextPage = () => {
   return (
     <View>
-      <Text>createLeague</Text>
+      <Text>nextPage</Text>
     </View>
   );
 };
 
-export default createLeague;
+export default nextPage;

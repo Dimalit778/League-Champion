@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView } from 'react-native';
 import React, { useEffect } from 'react';
 
 import Button from 'components/Button';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useGetUserQuery } from 'redux/services/userApi';
 import { logoutUser } from 'redux/slices/authSlice';
@@ -37,6 +37,7 @@ const Home = () => {
         <Text style={{ fontSize: 24 }}>Homeeeeeeeeee</Text>
         <Text style={{ fontSize: 24 }}>{user?.name}</Text>
         <Text style={{ fontSize: 24 }}>{user?.email}</Text>
+        <Link href={'/home/nextPage'}>Next page</Link>
       </View>
       <View>
         <Button btnLabel="Logout" Press={logout} />

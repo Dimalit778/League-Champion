@@ -1,5 +1,4 @@
-import { Redirect, useRouter } from 'expo-router';
-import homeImg from '../../../assets/images/HomeImg.png';
+import homeImg from '../../assets/images/HomeImg.png';
 import {
   ImageBackground,
   SafeAreaView,
@@ -10,21 +9,23 @@ import {
 import SpinnerAnimation from 'components/SpinnerAnimation';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Stack, useRouter } from 'expo-router';
 
 const Welcome = () => {
   router = useRouter();
   const { token } = useSelector((state) => state.auth);
-
   useEffect(() => {
+    console.log('App token: ' + token);
     if (!token) {
-      router.replace('Login');
+      router.replace('(auth)/login');
     } else {
-      router.replace('(user)/(tabs)/home');
+      router.replace('(user)/(drawer)/(tabs)');
     }
   }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
+      <Stack.Screen options={{ headerShown: false }} />
       <ImageBackground source={homeImg} style={styles.image}>
         <View style={{ flex: 1 }}>
           {/* BOX Header */}
@@ -34,7 +35,6 @@ const Welcome = () => {
 
           {/* BOX Section */}
           <View style={styles.boxSection}>
-            <Text style={styles.textHeader}>SECTION</Text>
             <SpinnerAnimation />
           </View>
         </View>

@@ -40,15 +40,6 @@ const addLeague = asyncHandler(async (req, res) => {
   );
 
   res.status(200).send(newLeague);
-  // const user = await User.update({ leagues: [...{ newLeague }] });
-
-  // update user leagues with the new league
-  // const updateUser = await User.findByIdAndUpdate(
-  //   {
-  //     _id: userId,
-  //   },
-  //   updateUser.leagues.push({ newLeague })
-  // );
 });
 //@ GET LEAGUE
 const getLeague = asyncHandler(async (req, res) => {
@@ -59,4 +50,13 @@ const getLeague = asyncHandler(async (req, res) => {
 
   res.status(200).send(league);
 });
-export { addLeague, getLeague };
+//@ GET LEAGUE
+const getAllUserLeagues = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await User.findById(userId);
+  if (!userId) return res.status(401).json({ message: 'User not found' });
+
+  res.status(200).send(user.leagues);
+});
+export { addLeague, getLeague, getAllUserLeagues };

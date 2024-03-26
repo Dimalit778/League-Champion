@@ -36,7 +36,10 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "@shopify/flash-list": "1.6.3",
+    "expo-dev-client": "~3.3.11",
+    "react-native-svg": "14.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

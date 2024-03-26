@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import toastAlert from '../../constans/toastAlert';
 import { PersistGate } from 'redux-persist/integration/react';

@@ -52,7 +52,7 @@ const Login = () => {
           text1: 'Login Successfully',
         });
 
-        router.replace('(tabs)/home');
+        router.replace('(user)');
       }
     });
   };

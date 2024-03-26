@@ -40,18 +40,19 @@ export const CustomDrawerContent = (props) => {
             icon={({ color, size }) => (
               <FontAwesome5
                 name="home"
-                size={size}
-                color={pathname == '/profile' ? '#fff' : '#000'}
+                size={28}
+                color={pathname == '/home' ? '#fff' : '#000'}
               />
             )}
             label={'Home'}
             labelStyle={[
               styles.navItemLabel,
-              { color: pathname == '/profile' ? '#fff' : '#000' },
+              { color: pathname == '/home' ? '#fff' : '#000' },
             ]}
             style={[
               styles.navItem,
-              { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
+              { backgroundColor: pathname == '/home' ? '#333' : '#fff' },
+              { borderColor: pathname == '/home' ? '#fff' : '#000' },
             ]}
             onPress={() => {
               router.navigate('(user)/(tabs)/home');
@@ -62,7 +63,7 @@ export const CustomDrawerContent = (props) => {
             icon={({ color, size }) => (
               <FontAwesome
                 name="user"
-                size={size}
+                size={28}
                 color={pathname == '/profile' ? '#fff' : '#000'}
               />
             )}
@@ -73,10 +74,11 @@ export const CustomDrawerContent = (props) => {
             ]}
             style={[
               styles.navItem,
-              { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
+              { backgroundColor: pathname == '/profile' ? '#333' : '#fff' },
+              { borderColor: pathname == '/profile' ? '#fff' : '#000' },
             ]}
             onPress={() => {
-              router.push('/(drawer)/Profile');
+              router.navigate('(user)/profile');
             }}
           />
           {/* //? ----> Leagues Nav < ----- */}
@@ -84,21 +86,22 @@ export const CustomDrawerContent = (props) => {
             icon={({ color, size }) => (
               <FontAwesome6
                 name="trophy"
-                size={size}
-                color={pathname == '/profile' ? '#fff' : '#000'}
+                size={28}
+                color={pathname == '/leagues' ? '#fff' : '#000'}
               />
             )}
-            label={' Leagues'}
+            label={'Leagues'}
             labelStyle={[
               styles.navItemLabel,
-              { color: pathname == '/profile' ? '#fff' : '#000' },
+              { color: pathname == '/leagues' ? '#fff' : '#000' },
             ]}
             style={[
               styles.navItem,
-              { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
+              { backgroundColor: pathname == '/leagues' ? '#333' : '#fff' },
+              { borderColor: pathname == '/leagues' ? '#fff' : '#000' },
             ]}
             onPress={() => {
-              router.navigate('/(drawer)/Leagues');
+              router.navigate('(user)/leagues');
             }}
           />
           {/* //? ----> Settings Nav < ----- */}
@@ -106,7 +109,7 @@ export const CustomDrawerContent = (props) => {
             icon={({ color, size }) => (
               <Ionicons
                 name="settings"
-                size={size}
+                size={28}
                 color={pathname == '/settings' ? '#fff' : '#000'}
               />
             )}
@@ -118,9 +121,10 @@ export const CustomDrawerContent = (props) => {
             style={[
               styles.navItem,
               { backgroundColor: pathname == '/settings' ? '#333' : '#fff' },
+              { borderColor: pathname == '/settings' ? '#fff' : '#000' },
             ]}
             onPress={() => {
-              router.navigate('/(drawer)/Settings');
+              router.navigate('(user)/settings');
             }}
           />
         </View>
@@ -128,18 +132,16 @@ export const CustomDrawerContent = (props) => {
       {/* //? ----> Logout Nav < ----- */}
       <DrawerItem
         icon={({ color, size }) => (
-          <SimpleLineIcons name="logout" size={24} color="black" />
+          <SimpleLineIcons name="logout" size={28} color="black" />
         )}
         label={'Log Out'}
-        labelStyle={[
-          styles.navItemLabel,
-          { color: pathname == '/settings' ? '#fff' : '#000' },
-        ]}
+        labelStyle={[styles.navItemLabel, { color: '#000' }]}
         style={[
           styles.navItem,
           {
-            backgroundColor: pathname == '/settings' ? '#333' : '#fff',
+            backgroundColor: '#fff',
             marginBottom: 25,
+            marginHorizontal: 60,
           },
         ]}
         onPress={() => {
@@ -153,7 +155,6 @@ export const CustomDrawerContent = (props) => {
 const styles = StyleSheet.create({
   navItem: {
     borderWidth: 1,
-    borderColor: 'black',
   },
   navItemLabel: {
     marginLeft: -20,
