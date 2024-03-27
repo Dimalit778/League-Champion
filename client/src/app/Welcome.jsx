@@ -17,7 +17,7 @@ const Welcome = () => {
   useEffect(() => {
     console.log('App token: ' + token);
     if (!token) {
-      router.replace('(auth)/login');
+      router.replace('(auth)/Login');
     } else {
       router.replace('(user)/(drawer)/(tabs)');
     }

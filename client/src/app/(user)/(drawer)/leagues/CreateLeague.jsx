@@ -17,6 +17,9 @@ const CreateLeague = () => {
   const [leagueCode, setLeagueCode] = useState(null);
   console.log(leagueCode);
   const router = useRouter();
+
+  const [selected, setSelected] = useState(false);
+  const flagSelected = () => {};
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.grey }}>
       <Stack.Screen
@@ -26,21 +29,44 @@ const CreateLeague = () => {
       />
       <View style={styles.container}>
         <Text style={styles.textHeader}>Create New League</Text>
-
-        <View style={styles.leagueBox}>
-          <Text style={{ fontSize: 16, fontWeight: '600' }}>Choose League</Text>
-          <FlatList
-            data={countryFlags}
-            keyExtractor={(item) => item.code}
-            renderItem={({ item, index }) => (
-              <Pressable onPress={() => setLeagueCode(item.code)}>
-                <View style={styles.flag}>
-                  <SvgUri width="80" height="80" uri={item.flag} />
-                  <Text>{item.name}</Text>
-                </View>
-              </Pressable>
-            )}
-          />
+        <View style={{ flex: 1, flexDirection: 'row', gap: 5 }}>
+          <View style={styles.leagueBox}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '600',
+              }}
+            >
+              Choose League
+            </Text>
+            <FlatList
+              data={countryFlags}
+              keyExtractor={(item) => item.code}
+              renderItem={({ item, index }) => (
+                <Pressable
+                  onPress={() => {
+                    setLeagueCode(item.code), 
+                    // setSelected(!selected); לא עובד
+                  }}
+                >
+                  <View
+                    style={[
+                      styles.flag,
+                      {
+                        backgroundColor: selected == true ? 'white' : 'black',
+                      },
+                    ]}
+                  >
+                    <SvgUri width="100%" height="90" uri={item.flag} />
+                    <Text style={styles.flagText}>{item.name}</Text>
+                  </View>
+                </Pressable>
+              )}
+            />
+          </View>
+          <View style={{ flex: 1, backgroundColor: 'green' }}>
+            <Text>form</Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -51,28 +77,37 @@ export default CreateLeague;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray,
-    margin: 30,
-    borderWidth: 3,
-    borderColor: COLORS.grey,
   },
   textHeader: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: '600',
     fontStyle: 'italic',
     textAlign: 'center',
     padding: 15,
   },
-  leagueBox: {
-    backgroundColor: 'black',
-  },
+  leagueBox: {},
 
   flag: {
-    width: 100,
-    height: 100,
-    padding: 5,
-    margin: 10,
+    marginHorizontal: 10,
+    marginTop: 10,
+    paddingHorizontal: 10,
     borderWidth: 1,
+    borderRadius: 5,
     borderColor: 'black',
   },
+  flagText: {
+    fontSize: 15,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingBottom: 5,
+  },
+  // selected: {
+  //   marginHorizontal: 10,
+  //   marginTop: 10,
+  //   paddingHorizontal: 10,
+  //   borderWidth: 1,
+  //   borderRadius: 5,
+  //   borderColor: 'black',
+  //   backgroundColor: 'grey',
+  // },
 });
